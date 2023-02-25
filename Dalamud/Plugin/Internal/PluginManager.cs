@@ -1264,8 +1264,8 @@ Thanks and have fun!";
     {
         Debug.Assert(this.bannedPlugins != null, "this.bannedPlugins != null");
 
-        if (this.LoadBannedPlugins)
-            return true;
+        ///if (this.LoadBannedPlugins)
+        ///    return true;
 
         var config = Service<DalamudConfiguration>.Get();
 

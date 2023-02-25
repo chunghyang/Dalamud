@@ -20,7 +20,7 @@ internal class PluginRepository
     /// <summary>
     /// The URL of the official main repository.
     /// </summary>
-    public const string MainRepoUrl = "https://kamori.goats.dev/Plugin/PluginMaster";
+    public const string MainRepoUrl = "https://raw.githubusercontent.com/chunghyang/DalamudPluginsD17/main/repo.json";
 
     private static readonly ModuleLog Log = new("PLUGINR");
 

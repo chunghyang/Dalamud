@@ -280,8 +280,16 @@ namespace Dalamud.Injector
                 i--;
             }
 
-            var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var xivlauncherDir = Path.Combine(appDataDir, "XIVLauncher");
+            // for otters
+            // link dalamud\bin\debug folder to XIVLauncherCN\Roaming\addon\Hooks
+            // kaigua easier!
+            var baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var xivlauncherDir = Path.Combine(baseDirectory, "..", "..", "..", "..", "Roaming");
+            if (!Directory.Exists(xivlauncherDir))
+            {
+                var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                xivlauncherDir = Path.Combine(appDataDir, "XIVLauncher");
+            }
 
             workingDirectory ??= Directory.GetCurrentDirectory();
             configurationPath ??= Path.Combine(xivlauncherDir, "dalamudConfig.json");
@@ -304,6 +312,8 @@ namespace Dalamud.Injector
                 clientLanguage = ClientLanguage.French;
             else if (languageStr[0..(len = Math.Min(languageStr.Length, (key = "français").Length))] == key[0..len])
                 clientLanguage = ClientLanguage.French;
+            else if (languageStr[0..(len = Math.Min(languageStr.Length, (key = "korean").Length))] == key[0..len])
+                clientLanguage = ClientLanguage.Korean;
             else if (int.TryParse(languageStr, out var languageInt) && Enum.IsDefined((ClientLanguage)languageInt))
                 clientLanguage = (ClientLanguage)languageInt;
             else
@@ -575,6 +585,10 @@ namespace Dalamud.Injector
             if (mode.Length > 0 && mode.Length <= 10 && "entrypoint"[0..mode.Length] == mode)
             {
                 mode = "entrypoint";
+            }
+            else if (mode.Length > 0 && mode.Length <= 6 && "inject"[0..mode.Length] == mode)
+            {
+                mode = "inject";
             }
             else if (mode.Length > 0 && mode.Length <= 6 && "inject"[0..mode.Length] == mode)
             {
